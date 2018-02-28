@@ -1,0 +1,200 @@
+<h2>
+	<center>
+		<%= title %>
+	</center>
+</h2>
+<h4>Please Click the API'S Below to Explore the API's.</h4>
+<hr/>
+<h3>OUTPUT:</h3>
+<%= result %>
+	<br/>
+	<%= JSON.stringify(response) %>
+		<hr/>
+		<h4>Create State: /api/v1/state/create</h4>
+		Example:
+		<pre>{ "range": 
+	{
+		"start": 1,
+		"end": 5 
+	},
+	"visible": true 
+}</pre>
+		<form name="form1" method="POST" action="/api/v1/state/create">
+			<table>
+				<td>Enter Object:</td>
+				<td><input type="text" name="stateObject"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="Create"></td>
+				</tr>
+			</table>
+		</form>
+		<hr/>
+		<h4>Get State: /api/v1/state/get</h4>
+		<a href="/api/v1/state/get">/api/v1/state/get</a>
+		<hr/>
+		<h4>Add Property to Created State: /api/v1/create/property | /api/v1/create/property1 </h4>
+		<p>Appends property in the existing state (mutates the original state). If this is called using two parameters. The first
+			parameter is where to append the state and the second being what property to append.
+		</p>
+		<p>Passing only one Parameter: /api/v1/create/property</p>
+		Example:
+		<pre>{
+	"focus": null 
+}</pre>
+		<form name="form1" method="POST" action="/api/v1/create/property">
+			<table>
+				<td>Enter Object:</td>
+				<td><input type="text" name="createPropObj"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="Add"></td>
+				</tr>
+			</table>
+		</form>
+		<p>Passing Two Paramenters: /api/v1/create/property1</p>
+		Example:
+		<pre>Property: 'range.type' 
+	object:{
+    "absolute": true
+}</pre>
+		<form name="form1" method="POST" action="/api/v1/create/property1">
+			<table>
+				<td>Enter property:</td>
+				<td><input type="text" name="createPropObjProperty"></td>
+				</tr>
+				<tr>
+					<td>Enter Object:</td>
+					<td><input type="text" name="createPropObj"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="Add"></td>
+				</tr>
+			</table>
+		</form>
+		<hr/>
+		<h4>Prop: /api/v1/get/property</h4>
+		<p>This acts as getter and setter. If the function is called by passing only one argument, it retrieve the value associated
+			with the property.</p>
+		Example:
+		<pre>Property: 'range.type'</pre>
+		<form name="form1" method="POST" action="/api/v1/get/property">
+			<table>
+				<td>Enter property:</td>
+				<td><input type="text" name="getProperty"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="Get Value"></td>
+				</tr>
+			</table>
+		</form>
+		<hr/>
+		<h4>Prop: /api/v1/set/property</h4>
+		<p>If the same function is called using two parameters, first one being the property and second one being the value, then
+			the value is set for the property and the handlers are called(if any) which got registered using the on function.
+		</p>
+		Example:
+		<pre>
+		Property: visible 
+		value: true
+		</pre>
+		<form name="form1" method="POST" action="/api/v1/set/property">
+			<table>
+				<td>Enter property:</td>
+				<td><input type="text" name="property"></td>
+				</tr>
+				<tr>
+					<td>Enter Value:</td>
+					<td><input type="text" name="propertyValue"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="Set"></td>
+				</tr>
+			</table>
+		</form>
+		<hr/>
+		<h4>on: /api/v1/set/event/on</h4>
+		<p>This function takes a single property and handler which is called when any of the properties are changed. When a single
+			property is changed the handler is called with two parameter, what was the old value of the state property and what is
+			the new value.</p>
+		Example:
+		<pre> Property: 'range.start'
+ function:  (oldValue, newValue) => { 
+ console.log('Value before prop change', oldValue);
+ console.log('Value after prop change', newValue);
+ })
+		</pre>
+		<form name="form1" method="POST" action="/api/v1/set/event/on">
+			<table>
+				<td>Enter property:</td>
+				<td><input type="text" name="property"></td>
+				</tr>
+				<tr>
+					<td>Enter function:</td>
+					<td><input type="text" name="function" width="200" height="100"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="Set"></td>
+				</tr>
+			</table>
+		</form>
+		<hr/>
+		<h4>next: /api/v1/set/event/next</h4>
+		<p>Just like the way on works, it just calls the handlers at the start of next event loop (next frame call) with all updates happened in the current frame in single go. 
+		The function definition and output schema remains same as on</p>
+		Example:
+		<pre> Property: 'range'
+ function:  (oldValue, newValue) => { 
+ console.log('Value before prop change', oldValue);
+ console.log('Value after prop change', newValue);
+ })
+		</pre>
+		
+		<form name="form1" method="POST" action="/api/v1/set/event/next">
+			<table>
+				<td>Enter property:</td>
+				<td><input type="text" name="property"></td>
+				</tr>
+				<tr>
+					<td>Enter function:</td>
+					<td><input type="text" name="function" width="200" height="100"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="Set"></td>
+				</tr>
+			</table>
+		</form>
+		
+<h3>Please Enter property and value that you want to change. after that click on End link to get the final Results.</h3>
+Example:
+<pre>
+Property: range.start 
+value: 12
+</pre>
+
+			<form name="form1" method="POST" action="/api/v1/set/property">
+				<table>
+					<td>Enter property:</td>
+					<td><input type="text" name="property"></td>
+					</tr>
+					<tr>
+						<td>Enter Value:</td>
+						<td><input type="text" name="propertyValue"></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="Change"></td>
+					</tr>
+				</table>
+			</form>
+			<h4>End:</h4>
+			<a href="/api/v1/set/event/on/unlock">End Next Event</a>
+	
+		<hr/>
+		<h4>Lock: /api/v1/set/event/on/lock</h4>
+		<p>Once lock() is called the state caches all the change that comes after this.</p>
+		<a href="/api/v1/set/event/on/lock">/api/v1/set/event/on/lock</a>
+		<hr/>
+		<h4>Unlock: /api/v1/set/event/on/unlock</h4>
+		<p>When unlock() is called it applies all the changes to the state and the handler is called.</p>
+		<a href="/api/v1/set/event/on/unlock">/api/v1/set/event/on/unlock</a>
+		<hr/>
