@@ -20,7 +20,7 @@ NPM
 ```
   running project:
 ```
-    Install all dependencies by : npm install, Then go to server folder and run node app.js
+    Install all dependencies by : npm install, run command node app.js
 ```
 Running Unit Test:
 ```
